@@ -1,0 +1,222 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Web-based video editor (local file, basic edits, export, project save/restore)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a responsive single-page editor UI with local video selection, in-browser preview, timeline/trim controls, and a properties panel.",
+      "acceptanceCriteria": [
+        "User can choose a video file from their device and see it loaded into a preview player.",
+        "UI includes (at minimum) trim controls with start/end times, play/pause, and current time display.",
+        "Layout works on desktop and remains usable on mobile (stacked panels or drawer)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the single-page editor shell including: header + landing hero area, file picker for local video selection, preview player region, timeline/trim control region, and a properties panel region. Use shadcn-ui components (e.g., Button, Card, Input, Tabs/Separator) for consistent structure and interactions; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/VideoEditorPage.tsx",
+          "operation": "create",
+          "description": "Implement the main editor workspace composition (Preview + Timeline/Transport + Properties) and responsive behavior (desktop side panel vs mobile stacked/drawer). Use shadcn-ui components (e.g., Sheet/Drawer for mobile properties, Slider for trims, ScrollArea) to keep the UI usable on small screens; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/VideoFilePicker.tsx",
+          "operation": "create",
+          "description": "Add a local file picker (accepting video types) that loads the selected file into an object URL and reports basic metadata (duration where available) back to the editor state. Use shadcn-ui Input/Button components for consistent styling; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/VideoPreview.tsx",
+          "operation": "create",
+          "description": "Create an in-browser preview player component wrapping an HTMLVideoElement with play/pause control wiring, current time display, and safe handling for trim range playback (e.g., clamping/looping within in/out)."
+        },
+        {
+          "path": "frontend/src/components/editor/TimelineTrimControls.tsx",
+          "operation": "create",
+          "description": "Add timeline/trim controls UI for start/end times (numeric inputs + slider) and transport controls (play/pause). Use shadcn-ui components (Slider, Input, Button) to compose a clean control bar; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/PropertiesPanel.tsx",
+          "operation": "create",
+          "description": "Create a properties panel showing current edit settings and controls for mute and playback speed, plus project actions (save/open) placeholders that will be wired in REQ-5. Use shadcn-ui form primitives (Switch, Select, Label) to compose controls; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useVideoEditorState.ts",
+          "operation": "create",
+          "description": "Create a state hook that owns: selected local file/object URL, duration, current time, play state, trim in/out, mute, playback speed, and derived validations (e.g., trimIn <= trimOut)."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure the app renders the new App component as the single-page editor UI and that global providers (e.g., QueryClientProvider) remain intact."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement basic editing controls (trim in/out, mute, playback speed) that immediately affect the in-browser preview.",
+      "acceptanceCriteria": [
+        "Adjusting trim in/out updates the effective playback range shown in the preview.",
+        "Toggling mute immediately affects preview audio.",
+        "Changing playback speed updates preview playback rate and is visible in the UI."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useVideoEditorState.ts",
+          "operation": "modify",
+          "description": "Add actions/selectors to update trim in/out, mute, and playback speed; include clamping/validation helpers and a single source of truth for settings used by preview and export."
+        },
+        {
+          "path": "frontend/src/components/editor/VideoPreview.tsx",
+          "operation": "modify",
+          "description": "Wire editor settings into the HTMLVideoElement: apply playbackRate, muted, and enforce trim range during playback (e.g., seek to trimIn when starting; stop or loop at trimOut)."
+        },
+        {
+          "path": "frontend/src/components/editor/TimelineTrimControls.tsx",
+          "operation": "modify",
+          "description": "Connect trim controls to editor state, display current time and trim values in seconds, and ensure changing trim updates the preview’s effective playback window. Use shadcn-ui Slider/Input/Button for consistent interactions; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/PropertiesPanel.tsx",
+          "operation": "modify",
+          "description": "Add mute toggle and playback speed controls (0.5x–2x) and bind them to editor state so changes immediately reflect in preview. Use shadcn-ui Switch/Select components; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add a client-side export flow to produce an output video reflecting current edit settings, with progress indication and retryable error handling.",
+      "acceptanceCriteria": [
+        "User can click an Export button and see export progress (indeterminate or percentage).",
+        "On success, the app provides a download link/button for the exported file.",
+        "On failure (unsupported codec, export error), the app shows an actionable error message and allows retry."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/export/exportTypes.ts",
+          "operation": "create",
+          "description": "Define shared types for export state (idle/running/success/error), progress reporting, and the exported Blob/download URL."
+        },
+        {
+          "path": "frontend/src/lib/export/exportVideo.ts",
+          "operation": "create",
+          "description": "Implement client-side export that applies trim and settings (mute, playback speed) and generates a downloadable result. Prefer a robust in-browser approach (e.g., ffmpeg.wasm-based) and ensure all processing remains client-side (no backend use for raw video)."
+        },
+        {
+          "path": "frontend/src/hooks/useVideoExport.ts",
+          "operation": "create",
+          "description": "Create a hook to orchestrate export: start/cancel (if supported), maintain progress (indeterminate/percent), expose error message and retry, and provide the final download URL/Blob."
+        },
+        {
+          "path": "frontend/src/components/editor/ExportPanel.tsx",
+          "operation": "create",
+          "description": "Add an export UI section with an Export button, progress display, and success download action. Use shadcn-ui components (Button, Progress, Alert/Dialog) for progress and error states; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/VideoEditorPage.tsx",
+          "operation": "modify",
+          "description": "Wire ExportPanel into the editor workspace and ensure errors don’t clear the currently loaded local video or current edit settings."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Connect the editor UI to the backend to save project metadata/settings, list saved projects, and reopen a project to restore settings without losing the loaded local video on failures.",
+      "acceptanceCriteria": [
+        "User can create/name a project and save current settings.",
+        "User can see a list of saved projects and reopen one to restore its settings in the UI.",
+        "If backend calls fail, the UI displays an error state and does not lose the currently loaded local video."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/backendClient.ts",
+          "operation": "create",
+          "description": "Create a small frontend backend-client wrapper using the existing core-infrastructure configuration to call backend methods declared in frontend/src/backend.d.ts (saveProject, listProjects/listProjectsView, getProject). Keep calls focused on metadata/settings only (no raw video)."
+        },
+        {
+          "path": "frontend/src/lib/projects/projectsApi.ts",
+          "operation": "create",
+          "description": "Add project-focused functions (save settings, list projects, fetch a project) that wrap backendClient and normalize errors for UI display."
+        },
+        {
+          "path": "frontend/src/hooks/useProjects.ts",
+          "operation": "create",
+          "description": "Implement React Query hooks to list projects and fetch/open a project, plus a mutation to save current settings. Ensure query failures are surfaced as UI state without clearing local editor state."
+        },
+        {
+          "path": "frontend/src/components/editor/ProjectBar.tsx",
+          "operation": "create",
+          "description": "Create a project toolbar: project name input, Save button, and Open project chooser (list + select). Use shadcn-ui components (Input, Button, Dialog/Popover, Command) for a polished picker experience; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/VideoEditorPage.tsx",
+          "operation": "modify",
+          "description": "Wire ProjectBar into the editor UI; on open, restore edit settings (trim/mute/speed) into editor state while keeping the currently loaded local video unchanged; show non-blocking error messages when backend calls fail."
+        },
+        {
+          "path": "frontend/src/components/editor/PropertiesPanel.tsx",
+          "operation": "modify",
+          "description": "If the properties panel is the chosen location for project actions, integrate ProjectBar (or its controls) without adding new pages. Use shadcn-ui layout components for consistent panel styling; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Apply a cohesive creative theme (non blue/purple primary) and consistent styling across landing/editor areas with clear hierarchy.",
+      "acceptanceCriteria": [
+        "Theme is consistent across navigation, buttons, panels, and forms.",
+        "Primary color palette is not blue/purple dominated.",
+        "Editor layout has clear visual hierarchy (preview, timeline/controls, properties)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global styles and CSS variables for the app theme (colors/typography/spacing) aligned with Tailwind + shadcn-ui tokens, choosing a primary palette that is not blue/purple dominated (e.g., warm amber/emerald/charcoal)."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme/token configuration as needed to support the chosen non-blue/purple primary palette and consistent panel/foreground styling while keeping existing shadcn-ui token structure intact."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply consistent layout and hierarchy: branded header, hero/intro section merged into the single page, and editor workspace sections with clear spacing, borders, and headings. Use shadcn-ui components (Card, Separator, Typography utilities) to enforce consistency; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/editor/VideoEditorPage.tsx",
+          "operation": "modify",
+          "description": "Refine responsive layout rules (grid/flex + container queries where appropriate) to ensure preview, timeline controls, and properties panel have clear visual hierarchy on desktop and remain usable on mobile."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Render the provided generated logo and hero images from frontend/public/assets/generated in the UI responsively without layout shift.",
+      "acceptanceCriteria": [
+        "App uses the provided generated image filenames directly from frontend/public/assets/generated.",
+        "Images are responsive and do not cause layout shift on load."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/BrandHeader.tsx",
+          "operation": "create",
+          "description": "Create a header that renders the generated logo image from frontend/public/assets/generated/logo-video-editor.dim_512x512.png with explicit sizing to avoid layout shift, plus accessible alt text. Use shadcn-ui layout primitives (e.g., Button for nav actions if any) for consistent styling; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/HeroSection.tsx",
+          "operation": "create",
+          "description": "Create a hero/landing section that renders the generated hero illustration from frontend/public/assets/generated/hero-video-editing.dim_1600x600.png with explicit width/height (or aspect-ratio) and responsive scaling to avoid layout shift."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire BrandHeader and HeroSection into the single-page layout (header/landing area above the editor workspace) and ensure the images remain responsive across breakpoints."
+        }
+      ]
+    }
+  ]
+}

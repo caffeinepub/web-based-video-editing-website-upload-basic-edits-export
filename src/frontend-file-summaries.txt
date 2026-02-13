@@ -1,0 +1,20 @@
+{
+  "frontend/src/App.tsx": "Main application component that renders the header, hero section, video editor workspace, and footer with theme provider and toast notifications.",
+  "frontend/src/components/BrandHeader.tsx": "Sticky header component displaying the logo image and app branding with Film icon.",
+  "frontend/src/components/HeroSection.tsx": "Hero section with gradient background, headline, feature highlights, and hero illustration image.",
+  "frontend/src/components/editor/VideoEditorPage.tsx": "Main editor workspace layout with responsive grid for preview, timeline, properties panel, and mobile sheet drawer.",
+  "frontend/src/components/editor/VideoFilePicker.tsx": "File picker component for selecting local video files with validation and metadata extraction.",
+  "frontend/src/components/editor/VideoPreview.tsx": "Video preview player with play/pause controls, trim range enforcement, and time display; handles null videoUrl by converting to undefined for the video src prop.",
+  "frontend/src/components/editor/TimelineTrimControls.tsx": "Timeline controls with transport buttons, playhead slider, and trim in/out inputs with sliders.",
+  "frontend/src/components/editor/PropertiesPanel.tsx": "Properties panel with mute toggle and playback speed selector controls.",
+  "frontend/src/components/editor/ExportPanel.tsx": "Export interface with progress tracking, download button, and error handling with retry.",
+  "frontend/src/components/editor/ProjectBar.tsx": "Project management toolbar with save/open dialogs and project list display.",
+  "frontend/src/hooks/useVideoEditorState.ts": "Custom hook managing all video editor state including video file, playback, trim, and settings with restore functionality.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching projects list and individual project data from backend.",
+  "frontend/src/hooks/useProjects.ts": "Project management hook with save mutation and project opening logic.",
+  "frontend/src/hooks/useVideoExport.ts": "Export orchestration hook managing export status, progress, download URL, and error states.",
+  "frontend/src/lib/export/exportTypes.ts": "TypeScript type definitions for export status, settings, and result structures.",
+  "frontend/src/lib/export/exportVideo.ts": "Client-side video export implementation using Canvas API and MediaRecorder to apply trim and settings.",
+  "frontend/src/index.css": "Global styles with OKLCH color system using warm amber/orange primary palette for light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration with extended color tokens, Inter font family, and custom design system values."
+}

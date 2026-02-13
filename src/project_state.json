@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Website for video editing where users can upload videos, apply basic edits, and export the result.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal film-strip + scissors logo on transparent background (logo-video-editor.dim_512x512.png)\n- Wide hero illustration showing a stylized video timeline and playhead (hero-video-editing.dim_1600x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-responsive-single-page-video-editor-ui-that-lets-users-select-a-local-video-file-previews-it-in-browser-and-shows-an-editing-workspace-with-a-timeline-trim-controls-and-a-properties-panel",
+      "title": "Create a responsive single-page video editor UI that lets users select a local video file, previews it in-browser, and shows an editing workspace with a timeline/trim controls and a properties panel.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-basic-editing-tools-that-operate-on-the-loaded-video-and-are-reflected-immediately-in-the-preview-trim-in-out-mute-unmute-audio-and-playback-speed-e-g-0-5x-2x",
+      "title": "Implement basic editing tools that operate on the loaded video and are reflected immediately in the preview: trim (in/out), mute/unmute audio, and playback speed (e.g., 0.5x–2x).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-export-flow-that-renders-produces-an-output-video-using-the-current-edit-settings-and-provides-a-downloadable-file-to-the-user-with-progress-indication-and-graceful-error-handling",
+      "title": "Add an export flow that renders/produces an output video using the current edit settings and provides a downloadable file to the user, with progress indication and graceful error handling.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-connect-the-frontend-to-the-backend-so-users-can-name-a-project-save-current-edit-settings-and-reopen-a-saved-project-to-restore-settings-in-the-editor-ui",
+      "title": "Connect the frontend to the backend so users can name a project, save current edit settings, and reopen a saved project to restore settings in the editor UI.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-cohesive-creative-visual-theme-for-the-app-colors-typography-spacing-and-component-styling-and-use-it-consistently-across-the-landing-editor-screens-without-using-a-blue-purple-primary-palette",
+      "title": "Apply a cohesive, creative visual theme for the app (colors, typography, spacing, and component styling) and use it consistently across the landing/editor screens without using a blue/purple primary palette.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-the-generated-static-images-logo-and-hero-illustration-from-frontend-public-assets-generated-in-the-ui-e-g-app-header-landing-area",
+      "title": "Render the generated static images (logo and hero/illustration) from frontend/public/assets/generated in the UI (e.g., app header/landing area).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a web-based video editing app with upload, basic editing tools, and export functionality",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add a lightweight backend model for saving and listing editing projects (metadata only), including project name, created/updated timestamps, and the edit settings (trim in/out, mute, playback speed).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Web-based video editing website (upload, basic edits, export)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

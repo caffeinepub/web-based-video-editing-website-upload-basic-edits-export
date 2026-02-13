@@ -1,0 +1,135 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-responsive-single-page-video-editor-ui-that-lets-users-select-a-local-video-file-previews-it-in-browser-and-shows-an-editing-workspace-with-a-timeline-trim-controls-and-a-properties-panel",
+      "featureTitle": "Create a responsive single-page video editor UI that lets users select a local video file, previews it in-browser, and shows an editing workspace with a timeline/trim controls and a properties panel.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/editor/PropertiesPanel.tsx",
+        "frontend/src/components/editor/TimelineTrimControls.tsx",
+        "frontend/src/components/editor/VideoEditorPage.tsx",
+        "frontend/src/components/editor/VideoFilePicker.tsx",
+        "frontend/src/components/editor/VideoPreview.tsx",
+        "frontend/src/hooks/useVideoEditorState.ts",
+        "frontend/src/main.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-basic-editing-tools-that-operate-on-the-loaded-video-and-are-reflected-immediately-in-the-preview-trim-in-out-mute-unmute-audio-and-playback-speed-e-g-0-5x-2x",
+      "featureTitle": "Implement basic editing tools that operate on the loaded video and are reflected immediately in the preview: trim (in/out), mute/unmute audio, and playback speed (e.g., 0.5x–2x).",
+      "files": [
+        "frontend/src/components/editor/PropertiesPanel.tsx",
+        "frontend/src/components/editor/TimelineTrimControls.tsx",
+        "frontend/src/components/editor/VideoPreview.tsx",
+        "frontend/src/hooks/useVideoEditorState.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-export-flow-that-renders-produces-an-output-video-using-the-current-edit-settings-and-provides-a-downloadable-file-to-the-user-with-progress-indication-and-graceful-error-handling",
+      "featureTitle": "Add an export flow that renders/produces an output video using the current edit settings and provides a downloadable file to the user, with progress indication and graceful error handling.",
+      "files": [
+        "frontend/src/components/editor/ExportPanel.tsx",
+        "frontend/src/components/editor/VideoEditorPage.tsx",
+        "frontend/src/hooks/useVideoExport.ts",
+        "frontend/src/lib/export/exportTypes.ts",
+        "frontend/src/lib/export/exportVideo.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-connect-the-frontend-to-the-backend-so-users-can-name-a-project-save-current-edit-settings-and-reopen-a-saved-project-to-restore-settings-in-the-editor-ui",
+      "featureTitle": "Connect the frontend to the backend so users can name a project, save current edit settings, and reopen a saved project to restore settings in the editor UI.",
+      "files": [
+        "frontend/src/components/editor/ProjectBar.tsx",
+        "frontend/src/components/editor/PropertiesPanel.tsx",
+        "frontend/src/components/editor/VideoEditorPage.tsx",
+        "frontend/src/hooks/useProjects.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-cohesive-creative-visual-theme-for-the-app-colors-typography-spacing-and-component-styling-and-use-it-consistently-across-the-landing-editor-screens-without-using-a-blue-purple-primary-palette",
+      "featureTitle": "Apply a cohesive, creative visual theme for the app (colors, typography, spacing, and component styling) and use it consistently across the landing/editor screens without using a blue/purple primary palette.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/editor/VideoEditorPage.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-render-the-generated-static-images-logo-and-hero-illustration-from-frontend-public-assets-generated-in-the-ui-e-g-app-header-landing-area",
+      "featureTitle": "Render the generated static images (logo and hero/illustration) from frontend/public/assets/generated in the UI (e.g., app header/landing area).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/BrandHeader.tsx",
+        "frontend/src/components/HeroSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

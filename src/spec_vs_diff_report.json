@@ -1,0 +1,80 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T11:37:52.889Z",
+  "summary": "Diff adds a full frontend video editor UI (file picker, preview, trim controls, properties panel, export panel, project save/open UI), a Motoko backend actor for project metadata, a local client-side export implementation using canvas+MediaRecorder, and a custom non-blue/purple theme plus rendering of provided generated images. However, several backend/API details and parts of project reopen/export behavior appear incomplete or mismatched with the BuildRequest.",
+  "missing_requirements": [
+    {
+      "id": "REQ-3",
+      "requirement": "Export must produce an output video using the current edit settings (trim in/out, mute, playback speed) with progress and error handling.",
+      "reason": "Export applies trim and progress, and conditionally adds audio, but does not apply playback speed from settings during export (video.playbackRate is hard-coded to 1 and settings.playbackSpeed is unused).",
+      "evidence": [
+        "frontend/src/lib/export/exportVideo.ts"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Backend must support create, update, fetch-by-id, and list projects with persistence across reloads/canister upgrades (template defaults), storing metadata/settings only.",
+      "reason": "Backend uses an in-memory Map (no stable storage shown) so persistence across canister upgrades/reloads is not evidenced. Also, there is no explicit project id; the API uses name as the key, and there is no separate create vs update method (only saveProject).",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Users can reopen a saved project to restore settings in the editor UI.",
+      "reason": "ProjectBar defines a handleOpenProject that calls useProjects().openProject(...) and closes the dialog, but the shown useProjects().openProject only returns the settings and does not update editor state; no call to editorState.restoreSettings is evidenced in the provided (truncated) ProjectBar code.",
+      "evidence": [
+        "frontend/src/hooks/useProjects.ts",
+        "frontend/src/components/editor/ProjectBar.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Internet Identity authentication/identity plumbing (hooks and actor creation dependent on identity).",
+      "reason": "BuildRequest explicitly states third-party authentication providers are non-goals and Internet Identity is not requested; diff adds useInternetIdentity and identity-aware actor creation.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Additional backend method listProjectsView returning (name, updated) tuples.",
+      "reason": "Not requested in REQ-4 (only create/update, fetch by id, list projects).",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/BrandHeader.tsx",
+    "frontend/src/components/HeroSection.tsx",
+    "frontend/src/components/editor/ExportPanel.tsx",
+    "frontend/src/components/editor/ProjectBar.tsx",
+    "frontend/src/components/editor/PropertiesPanel.tsx",
+    "frontend/src/components/editor/TimelineTrimControls.tsx",
+    "frontend/src/components/editor/VideoEditorPage.tsx",
+    "frontend/src/components/editor/VideoFilePicker.tsx",
+    "frontend/src/components/editor/VideoPreview.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useProjects.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useVideoEditorState.ts",
+    "frontend/src/hooks/useVideoExport.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/export/exportTypes.ts",
+    "frontend/src/lib/export/exportVideo.ts",
+    "frontend/src/main.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

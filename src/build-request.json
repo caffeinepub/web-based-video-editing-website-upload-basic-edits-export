@@ -1,0 +1,151 @@
+{
+  "kind": "build_request",
+  "title": "Web-based video editing website (upload, basic edits, export)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a responsive single-page video editor UI that lets users select a local video file, previews it in-browser, and shows an editing workspace with a timeline/trim controls and a properties panel.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I want to create a website for video editing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can choose a video file from their device and see it loaded into a preview player.",
+        "UI includes (at minimum) trim controls with start/end times, play/pause, and current time display.",
+        "Layout works on desktop and remains usable on mobile (stacked panels or drawer)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement basic editing tools that operate on the loaded video and are reflected immediately in the preview: trim (in/out), mute/unmute audio, and playback speed (e.g., 0.5x–2x).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I want to create a website for video editing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Adjusting trim in/out updates the effective playback range shown in the preview.",
+        "Toggling mute immediately affects preview audio.",
+        "Changing playback speed updates preview playback rate and is visible in the UI."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add an export flow that renders/produces an output video using the current edit settings and provides a downloadable file to the user, with progress indication and graceful error handling.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I want to create a website for video editing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can click an Export button and see export progress (indeterminate or percentage).",
+        "On success, the app provides a download link/button for the exported file.",
+        "On failure (unsupported codec, export error), the app shows an actionable error message and allows retry."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a lightweight backend model for saving and listing editing projects (metadata only), including project name, created/updated timestamps, and the edit settings (trim in/out, mute, playback speed).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I want to create a website for video editing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes methods to create a project, update a project’s edit settings, fetch a project by id, and list projects.",
+        "Project data persists across reloads/canister upgrades as permitted by the template defaults (no migration unless state already exists).",
+        "Backend stores only metadata/settings (no raw video bytes)."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Connect the frontend to the backend so users can name a project, save current edit settings, and reopen a saved project to restore settings in the editor UI.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I want to create a website for video editing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can create/name a project and save current settings.",
+        "User can see a list of saved projects and reopen one to restore its settings in the UI.",
+        "If backend calls fail, the UI displays an error state and does not lose the currently loaded local video."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a cohesive, creative visual theme for the app (colors, typography, spacing, and component styling) and use it consistently across the landing/editor screens without using a blue/purple primary palette.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I want to create a website for video editing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is consistent across navigation, buttons, panels, and forms.",
+        "Primary color palette is not blue/purple dominated.",
+        "Editor layout has clear visual hierarchy (preview, timeline/controls, properties)."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Render the generated static images (logo and hero/illustration) from frontend/public/assets/generated in the UI (e.g., app header/landing area).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I want to create a website for video editing"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App uses the provided generated image filenames directly from frontend/public/assets/generated.",
+        "Images are responsive and do not cause layout shift on load."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo (no additional backend services).",
+    "Do not modify any files under frontend/src/components/ui or any other immutable paths listed in SYSTEM_CONTEXT; compose those components instead.",
+    "Do not store or process raw video files on the backend; keep video data client-side.",
+    "Use English for any user-facing text."
+  ],
+  "nonGoals": [
+    "Advanced professional editing features (multi-track timeline, keyframing, color grading, transitions library, captions/subtitles).",
+    "Real-time collaboration, chat, or WebSocket-based sync.",
+    "Third-party authentication providers (only Internet Identity would be allowed, but it is not requested here).",
+    "External database or external cloud storage for video uploads."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal film-strip + scissors logo on transparent background (logo-video-editor.dim_512x512.png)",
+      "Wide hero illustration showing a stylized video timeline and playhead (hero-video-editing.dim_1600x600.png)"
+    ],
+    "edits": []
+  }
+}
